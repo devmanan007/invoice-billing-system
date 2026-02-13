@@ -1,76 +1,43 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>@yield('title', 'Admin Panel')</title>
+    <title>Admin Panel</title>
 
     <!-- Bootstrap 5 -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-
-    <style>
-        .sidebar {
-            width: 250px;
-            min-height: 100vh;
-        }
-        .sidebar a {
-            color: #fff;
-            text-decoration: none;
-        }
-        .sidebar a:hover {
-            background: rgba(255,255,255,0.1);
-        }
-    </style>
-
-    @stack('styles')
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
 
-<div class="d-flex">
+<nav class="navbar navbar-dark bg-dark">
+    <div class="container-fluid">
+        <span class="navbar-brand">Invoice Admin Panel</span>
+    </div>
+</nav>
 
-    <!-- SIDEBAR -->
-    <aside class="sidebar bg-dark p-3">
-        <h4 class="text-center text-white mb-4">Invoice System</h4>
+<div class="container-fluid">
+    <div class="row">
 
-        <ul class="nav flex-column gap-1">
+        <!-- LEFT SIDEBAR -->
+        <div class="col-md-3 col-lg-2 bg-light min-vh-100 p-3">
+            @include('admin.partials.sidebar')
+        </div>
 
-            {{-- Dashboard --}}
-            <li class="nav-item">
-                <a href="{{ route('dashboard') }}" class="nav-link text-white">
-                    Dashboard
-                </a>
-            </li>
+        <!-- MAIN CONTENT -->
+        <div class="col-md-9 col-lg-10 p-4">
 
+            {{-- Flash message --}}
+            @if(session('success'))
+                <div class="alert alert-success">
+                    {{ session('success') }}
+                </div>
+            @endif
 
-        </ul>
-    </aside>
-
-    <!-- MAIN CONTENT -->
-    <div class="flex-grow-1">
-
-        <!-- TOP NAVBAR -->
-        <nav class="navbar navbar-light bg-light px-4">
-            <span>
-                👤 {{ auth()->user()->name }}
-                <small class="text-muted">({{ auth()->user()->getRoleNames()->first() }})</small>
-            </span>
-
-            <form method="POST" action="{{ route('logout') }}">
-                @csrf
-                <button class="btn btn-danger btn-sm">Logout</button>
-            </form>
-        </nav>
-
-        <!-- PAGE CONTENT -->
-        <main class="container-fluid p-4">
             @yield('content')
-        </main>
+
+        </div>
 
     </div>
 </div>
 
-<!-- Bootstrap JS -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-
-@stack('scripts')
 </body>
 </html>
