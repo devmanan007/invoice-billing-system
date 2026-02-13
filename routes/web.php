@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\admin\ClientController;
+use App\Http\Controllers\Admin\ProductController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -24,6 +25,7 @@ Route::middleware(['auth', 'role:admin|accountant|staff|viewer'])->group(functio
     })->name('dashboard');
 
     Route::resource('clients', ClientController::class);
+    Route::resource('products', ProductController::class);
 
 });
 
